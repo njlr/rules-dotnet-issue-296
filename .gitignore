@@ -1,0 +1,11 @@
+bin
+obj
+
+.paket
+paket-files
+
+bazel-*
+
+*.tar
+
+pkgdiff_reports/

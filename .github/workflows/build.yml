@@ -1,0 +1,32 @@
+
+name: Build
+
+on: [ push, pull_request ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-22.04
+
+    - name: Install pkgdiff
+      run: sudo apt-get install -y pkgdiff
+
+    - uses: actions/checkout@v2
+
+    - name: Build
+      run: |
+        bazel version
+        bazel build //...
+        sha256sum ./bazel-bin/bundle.tar
+        cp ./bazel-bin/bundle.tar ./bundle-1.tar
+        bazel clean
+        bazel build //...
+        sha256sum ./bazel-bin/bundle.tar
+        cp ./bazel-bin/bundle.tar ./bundle-2.tar
+        pkgdiff ./bundle-1.tar ./bundle-2.tar
+
+    - name: Archive changes report
+      uses: actions/upload-artifact@v3
+      with:
+        name: changes_report
+        path: pkgdiff_reports/bundle/1_to_2/changes_report.html

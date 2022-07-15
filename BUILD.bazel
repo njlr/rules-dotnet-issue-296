@@ -1,0 +1,22 @@
+load("@rules_dotnet//dotnet:defs.bzl", "fsharp_binary")
+load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
+
+fsharp_binary(
+  name = "app",
+  srcs = [
+    "Program.fs",
+  ],
+  target_frameworks = [ "net6.0" ],
+  deps = [
+    "@paket.main//microsoft.netcore.app.ref",
+    "@paket.main//fsharp.core",
+  ],
+)
+
+pkg_tar(
+  name = "bundle",
+  srcs = [
+    ":app",
+  ],
+  include_runfiles = True,
+)
