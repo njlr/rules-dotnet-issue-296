@@ -24,7 +24,7 @@ jobs:
         bazel build //...
         sha256sum ./bazel-bin/bundle.tar
         cp ./bazel-bin/bundle.tar ./bundle-2.tar
-        pkgdiff ./bundle-1.tar ./bundle-2.tar
+        pkgdiff ./bundle-1.tar ./bundle-2.tar || true
 
     - name: Archive changes report
       uses: actions/upload-artifact@v3
