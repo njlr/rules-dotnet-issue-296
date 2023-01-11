@@ -9,3 +9,5 @@ bazel clean
 bazel build //...
 sha256sum ./bazel-bin/bundle.tar
 ```
+
+Fixed in `v0.8.4`
